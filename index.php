@@ -21,6 +21,13 @@
 				</select>
 				<span id="type">Restaurants</span>
 				<br>
+				<label>Mode of Travel: </label>
+				<select id="travel_mode"> 
+					<option value="DRIVING">Driving</option>
+					<option value="WALKING">Walking</option>
+					<option value="TRANSIT">Transit</option>
+				</select>
+				<br>
 				<label>Find restaurants within <input type="number" id="radius" value="100" step="10"/> meters</label>
 				<hr>
 				<label for="count">There are <span id="count"></span> within <span class="radius">100</span> meters</label>

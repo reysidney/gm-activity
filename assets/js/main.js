@@ -1,14 +1,14 @@
 var map;
 var infowindow;
 var myLatLng;
-var travelMode;
 var directionsDisplay;
 var directionsService;
 var cityCircle;
 var count;
+var prevPoint;
 var placeService;
 var $radius = $('#radius');
-
+var $travelMode = $('#travel_mode');
 function locate() {
     navigator.geolocation.getCurrentPosition(initialize,fail);
 }
@@ -30,7 +30,6 @@ function initialize(position) {
     var type = 'restaurant';
     var json = $.getJSON( "assets/json/map_style.json");
     myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    travelMode = "WALKING";
     count = 0;
     directionsDisplay = new google.maps.DirectionsRenderer;
     directionsService = new google.maps.DirectionsService();
@@ -39,7 +38,7 @@ function initialize(position) {
     $('.radius').text(radius);
     json.done(function(map_style){  
         var mapOptions = {
-            zoom: 19,
+            zoom: radiusToZoom(radius),
             center: myLatLng,
             styles: map_style
         }
@@ -56,6 +55,10 @@ $radius.on('change', function () {
     navigator.geolocation.getCurrentPosition(initialize,fail);
 });
 
+$travelMode.on('change', function () {
+    calculateRoute(myLatLng, prevPoint);
+});
+
 function updateMap () {
     var radius = parseInt($radius.val());
     var type = 'restaurant';
@@ -68,6 +71,7 @@ function drawSelfMarker (myLatLng) {
         map: map,
         title: "Current Location"
     });
+    map.fitBounds();
 }
 
 function drawCircle(radius) {
@@ -101,12 +105,20 @@ function callback(results, status, pagination) {
         count += results.length;
         if (pagination.hasNextPage) {
             pagination.nextPage();
+            $("div.content input, select").attr('disabled', 'disabled');
+        } else {
+            $("div.content input, select").removeAttr('disabled');
         }
     }
     text_count = count + " restaurant";
     if(count > 1)
         text_count += "s";
     $('#count').text(text_count);
+}
+
+function radiusToZoom(radius){
+    radius *= 0.00035;
+    return Math.round(14-Math.log(radius)/Math.LN2);
 }
 
 function createMarker(place) {
@@ -153,15 +165,15 @@ function setMarkerContent (place, position) {
 }
 
 function getDirections (lat, lng) {
-    var point = {lat: lat, lng: lng};
-    calculateRoute(myLatLng, point);
+    prevPoint = {lat: lat, lng: lng};
+    calculateRoute(myLatLng, prevPoint);
 }
 
 function calculateRoute(start, end) {
     directionsService.route({
         origin: start,
         destination: end,
-        travelMode: travelMode
+        travelMode: $travelMode.val(),
     }, function(response, status) {
         if (status === 'OK') {
         directionsDisplay.setDirections(response);
