@@ -10,7 +10,21 @@
 		<div id="floating-panel">
 			<strong>Map Filters</strong>
 			<hr>
-			<label>Find <span id="type">Restaurants</span> within <input type="number" id="radius" value="200" step="10"/> meters</label>
+			<div class="content">
+				<!-- <label>Find </label>
+				<select id="type_select"> 
+					<option value="restaurant"> Restaurants </option>
+				</select>
+				<br> -->
+				<label>Find 
+				<select id="subtype_select"> 
+				</select>
+				<span id="type">Restaurants</span>
+				<br>
+				<label>Find restaurants within <input type="number" id="radius" value="100" step="10"/> meters</label>
+				<hr>
+				<label for="count">There are <span id="count"></span> within <span class="radius">100</span> meters</label>
+			</div>
     </div>
     <div id="right-panel"></div>
     <div id="map"></div>

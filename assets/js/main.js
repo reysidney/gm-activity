@@ -5,6 +5,7 @@ var travelMode;
 var directionsDisplay;
 var directionsService;
 var cityCircle;
+var count;
 var placeService;
 var $radius = $('#radius');
 
@@ -30,13 +31,15 @@ function initialize(position) {
     var json = $.getJSON( "assets/json/map_style.json");
     myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     travelMode = "WALKING";
+    count = 0;
     directionsDisplay = new google.maps.DirectionsRenderer;
     directionsService = new google.maps.DirectionsService();
     infowindow = new google.maps.InfoWindow();
 
+    $('.radius').text(radius);
     json.done(function(map_style){  
         var mapOptions = {
-            zoom: 18,
+            zoom: 19,
             center: myLatLng,
             styles: map_style
         }
@@ -50,7 +53,7 @@ function initialize(position) {
 }
 
 $radius.on('change', function () {
-    updateMap ();
+    navigator.geolocation.getCurrentPosition(initialize,fail);
 });
 
 function updateMap () {
@@ -83,9 +86,6 @@ function drawCircle(radius) {
 }
 
 function searchByRadiusType(radius, type) {
-    if(placeService) {
-        placeService = null;
-    }
     placeService = new google.maps.places.PlacesService(map);
     placeService.nearbySearch({
         location: myLatLng,
@@ -95,19 +95,28 @@ function searchByRadiusType(radius, type) {
     drawCircle(radius);
 }
 
-function callback(results, status) {
+function callback(results, status, pagination) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+        createMarkers(results);
+        count += results.length;
+        if (pagination.hasNextPage) {
+            pagination.nextPage();
         }
     }
+    text_count = count + " restaurant";
+    if(count > 1)
+        text_count += "s";
+    $('#count').text(text_count);
 }
 
 function createMarker(place) {
     var placeLoc = place.geometry.location;
     var icon = {
         url: place.icon,
-        scaledSize: new google.maps.Size(30, 30),
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25),
         labelOrigin: new google.maps.Point(15, 40)
     }
     var marker = new google.maps.Marker({
@@ -127,6 +136,14 @@ function createMarker(place) {
         infowindow.setContent(setMarkerContent(place, this.getPosition()));
         infowindow.open(map, this);
     });
+}
+
+function createMarkers(places) {
+    var place;
+    for (var i = 0; place = places[i]; i++) {
+        console.log(place);
+        createMarker(place);
+    }
 }
 
 function setMarkerContent (place, position) {
