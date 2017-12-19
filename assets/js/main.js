@@ -260,10 +260,12 @@ function filterRestaurants(type) {
 		// get restaurants matching the selected type
 		if(sampleData[i].type == type || type == '') {
             createMarker(sampleData[i]);
-            markerCoords = new google.maps.LatLng(sampleData[i].geometry.location.lat, sampleData[i].geometry.location.lng);
-            diff = (google.maps.geometry.spherical.computeDistanceBetween(selectedCoords, markerCoords));
-            if(diff <= $radius.val()) {
-                count++;
+            if(selectedCoords) {
+                markerCoords = new google.maps.LatLng(sampleData[i].geometry.location.lat, sampleData[i].geometry.location.lng);
+                diff = (google.maps.geometry.spherical.computeDistanceBetween(selectedCoords, markerCoords));
+                if(diff <= $radius.val()) {
+                    count++;
+                }
             }
 		}
     }
