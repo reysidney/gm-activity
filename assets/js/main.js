@@ -96,7 +96,7 @@ function displayRestaurantJSON (restaurantJSON) {
         if(results.length > 0) {
             sampleData = results;
             populateTypeOption(sampleData);
-            filterRestaurants('');
+            filterRestaurants($subType.find(":selected").val());
         }
     });
 }
@@ -141,7 +141,7 @@ function drawCircle(point, radius) {
 
     // update count 
     if(sampleData) {
-        filterRestaurants('');
+        filterRestaurants($subType.find(":selected").val());
     }
 }
 
