@@ -47,9 +47,18 @@
     </div>
     <div id="right-panel"></div>
     <div id="map"></div>
+	<div id="footer"> 
+		<div id="footerbuttondown">&#9660;</div>
+		<div id="footerbuttonup">&#9650;</div>
+		<div id="footercont">
+			<div id="chartContainer"></div>
+		</div>
+	</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="assets/js/main.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=YOUR_API_KEY" async defer></script>
+	<script src="assets/js/footer.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c" async defer></script>
 </html>

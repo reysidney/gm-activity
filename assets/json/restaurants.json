@@ -54,7 +54,7 @@
        "vicinity" : "F. Cabahug Street, Ayala Access Road, Kasambagan, Cebu City"
     },
     {
-        
+        "type" : "Carenderia",
         "specialty" : "Fried Chicken",
         "customers" : 123,
         "geometry" : {
