@@ -1,6 +1,9 @@
 [
     {
-       "geometry" : {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.3248454,
              "lng" : 123.9152788
@@ -51,7 +54,10 @@
        "vicinity" : "F. Cabahug Street, Ayala Access Road, Kasambagan, Cebu City"
     },
     {
-       "geometry" : {
+        
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.3314826,
              "lng" : 123.9026579
@@ -100,7 +106,10 @@
        "vicinity" : "Saint Lawrence Street, La Guardia, Barangay Lahug, Cebu City"
     },
     {
-       "geometry" : {
+        
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.3200241,
              "lng" : 123.9014704
@@ -141,7 +150,10 @@
        "vicinity" : "18 Molave Street, Camputhan, Cebu City"
     },
     {
-       "geometry" : {
+        
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.329952,
              "lng" : 123.901566
@@ -182,6 +194,9 @@
        "vicinity" : "Salinas Drive, Cebu City"
     },
     {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.319371,
@@ -223,6 +238,10 @@
        "vicinity" : "Archbishop Reyes Avenue, Cebu City"
     },
     {
+        
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3111121,
@@ -272,54 +291,9 @@
        "vicinity" : "J. Llorente Street, Cebu City"
     },
     {
-       "geometry" : {
-          "location" : {
-             "lat" : 10.3358157,
-             "lng" : 123.9117069
-          },
-          "viewport" : {
-             "northeast" : {
-                "lat" : 10.3371646802915,
-                "lng" : 123.9130558802915
-             },
-             "southwest" : {
-                "lat" : 10.3344667197085,
-                "lng" : 123.9103579197085
-             }
-          }
-       },
-       "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
-       "id" : "3ffbce38c2c524dab6d1a037ba0d04251c04b122",
-       "name" : "Main Hotel and Suites",
-       "opening_hours" : {
-          "open_now" : true,
-          "weekday_text" : []
-       },
-       "photos" : [
-          {
-             "height" : 3456,
-             "html_attributions" : [
-                "\u003ca href=\"https://maps.google.com/maps/contrib/104246160019806319706/photos\"\u003eMain Hotel and Suites\u003c/a\u003e"
-             ],
-             "photo_reference" : "CmRaAAAAlJ_0ku8OK5SKrKwEn1UISWhV7NY3-_wSPkf99LUNjCnRs01luiksXXJCq9f9HkIYZB_SmqbNOZPloM4E8_btAz_FI3ksRUumwA4sMFsmgBTBtzluAWAk0FiSCVTUrRXHEhCif0ooh-7z9Y4UxLcsm8r6GhT4l10U62L-6Ci_KSFVy3dm-F16rw",
-             "width" : 5184
-          }
-       ],
-       "place_id" : "ChIJpck9uuGYqTMRniQppjWAwZA",
-       "rating" : 4.1,
-       "reference" : "CmRSAAAA1sXEtRYX-sQ7UMPfRAyo0XvdP7YZexIGear1_lVKjcxgksXqPC_L9NmKzuFoAykwYiaF0jQ_F9MghmM_XccJIfpbecs13-TK6dX5qe7_oS2VQ5r6wtR5-xT-p-q2B-sAEhAWk2X6BZIHIDnwAtHRBxRVGhTxqWKpkYjqcM1BnwqkvNLEdA8yCA",
-       "scope" : "GOOGLE",
-       "types" : [
-          "cafe",
-          "lodging",
-          "restaurant",
-          "food",
-          "point_of_interest",
-          "establishment"
-       ],
-       "vicinity" : "J.Panis St. Old Banilad Road, Kasambagan, Cebu City"
-    },
-    {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3282974,
@@ -361,47 +335,9 @@
        "vicinity" : "The Walk, Cebu City"
     },
     {
-       "geometry" : {
-          "location" : {
-             "lat" : 10.335221,
-             "lng" : 123.942133
-          },
-          "viewport" : {
-             "northeast" : {
-                "lat" : 10.3365699802915,
-                "lng" : 123.9434819802915
-             },
-             "southwest" : {
-                "lat" : 10.3338720197085,
-                "lng" : 123.9407840197085
-             }
-          }
-       },
-       "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
-       "id" : "70e6d2ea61f21f5c60dc08819bd22c9914461fb5",
-       "name" : "Dohera Hotel",
-       "opening_hours" : {
-          "open_now" : true,
-          "weekday_text" : []
-       },
-       "photos" : [
-          {
-             "height" : 2135,
-             "html_attributions" : [
-                "\u003ca href=\"https://maps.google.com/maps/contrib/106297188200574320626/photos\"\u003eDohera Hotel\u003c/a\u003e"
-             ],
-             "photo_reference" : "CmRaAAAAHiT7p_QexW0p_9YY3cCreDXATIj8_liD5lD_6SHwWBB9sO-7pHjfiumV4YHGptjlybERsMMB3bssLsZu79xpcUBghYd4ohoqLl5kcLeSF-rY0mXjagsPu3xDKwcO91zMEhAAzstKTeDy1y2cHkqGnx2TGhRA33yhuHVAPNHmsZWi_9CPbrAKAw",
-             "width" : 3200
-          }
-       ],
-       "place_id" : "ChIJ907Yyf2YqTMRygxlls5DbUs",
-       "rating" : 4,
-       "reference" : "CmRRAAAAuHPdbVvjQENgbKCG2aog7Sok8XEfmib4YhxM4FsJHl78y8wY_sXKHklCxbBmsnoJi9fs6Da_AUD7qmxdOXvPG6CN4si6MxFoUhFrc63CSVxCtmPDKpHxakSuOIT7CRxkEhBFjQp0q_r_PWFI3mn_bStEGhQdP4ytZgO0vbMoogadQGY6lCwc5Q",
-       "scope" : "GOOGLE",
-       "types" : [ "lodging", "restaurant", "food", "point_of_interest", "establishment" ],
-       "vicinity" : "A.C Cortes Street, Mandaue City"
-    },
-    {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3287558,
@@ -443,44 +379,10 @@
        "vicinity" : "GF i1 Building, Jose Maria del Mar Street, Cebu City"
     },
     {
-       "geometry" : {
-          "location" : {
-             "lat" : 10.3425713,
-             "lng" : 123.9188095
-          },
-          "viewport" : {
-             "northeast" : {
-                "lat" : 10.3439202802915,
-                "lng" : 123.9201584802915
-             },
-             "southwest" : {
-                "lat" : 10.3412223197085,
-                "lng" : 123.9174605197085
-             }
-          }
-       },
-       "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-       "id" : "f3a8bba5ce37962f05bdd4253025165759bf10d4",
-       "name" : "10 Dove's Street Resto",
-       "photos" : [
-          {
-             "height" : 1024,
-             "html_attributions" : [
-                "\u003ca href=\"https://maps.google.com/maps/contrib/117181693244037157838/photos\"\u003eRhofel Candado\u003c/a\u003e"
-             ],
-             "photo_reference" : "CmRaAAAAS7TitRv6gUBCutBW76TOOLjYFN4hAVzehfz9kRPzC0Ywg207C84F7ca2N-gpczdyWyXzK6DvU99J6j6h0ZTx7_witCuhNiFaDetT-JJhlGCFYpOke8GDjzvTsAr3LpqsEhAIux2o2a7haXlAfOmGehq-GhQvbcyjm7q_5DZJlaK7KzQw99vdLg",
-             "width" : 768
-          }
-       ],
-       "place_id" : "ChIJDVtYAfKYqTMR_r3HUkk4wCo",
-       "rating" : 3.6,
-       "reference" : "CmRRAAAAAquEGuO-TvTGxlPO4saW44I38y3Z7HZom2CiqN-bRaxvNmZmxjiDmURxaGFarbm2Nq_HckERK8jxoMnfwCKB2Js4BxsuI0xUPX3vZAGApmQFY5WI3qL4XYiits3z22eBEhAhc3nmD6_BrEsfJ6q-CHqfGhSafr0rJR9FOab8h8oeZQtoZhj6pA",
-       "scope" : "GOOGLE",
-       "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
-       "vicinity" : "869 A. S. Fortuna Street, Mandaue City"
-    },
-    {
-       "geometry" : {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.3282278,
              "lng" : 123.9100796
@@ -521,47 +423,9 @@
        "vicinity" : "Cebu City"
     },
     {
-       "geometry" : {
-          "location" : {
-             "lat" : 10.3425558,
-             "lng" : 123.9163768
-          },
-          "viewport" : {
-             "northeast" : {
-                "lat" : 10.3439047802915,
-                "lng" : 123.9177257802915
-             },
-             "southwest" : {
-                "lat" : 10.3412068197085,
-                "lng" : 123.9150278197085
-             }
-          }
-       },
-       "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-       "id" : "fb636612481f266ea331610ec0da998648c9f188",
-       "name" : "Kagura Japanese Restaurant",
-       "opening_hours" : {
-          "open_now" : true,
-          "weekday_text" : []
-       },
-       "photos" : [
-          {
-             "height" : 2160,
-             "html_attributions" : [
-                "\u003ca href=\"https://maps.google.com/maps/contrib/110512526349203031466/photos\"\u003ekenji yamada\u003c/a\u003e"
-             ],
-             "photo_reference" : "CmRaAAAA3gEAA8MXh5W0cULD8wdl2122DrmBp2a0yfFq9KWDUXatUcsIYM7fOtQ3VOyEL-Wnfm5QxyrDBIN6L2UCYBN8TqxhG7dKmAJxrTW-rJN5ew3BnZLhnM_d_zRKBwbISVLjEhCrtFkAzzrnXsNmV26u0BkpGhRSH6VuZFkRLMekzbnzSdsLBfYArg",
-             "width" : 3840
-          }
-       ],
-       "place_id" : "ChIJR3Vsl-WYqTMRDbOCHQVPkh4",
-       "rating" : 3.9,
-       "reference" : "CmRRAAAAdkxTGZXN8GAN-xC9gyQ8i8l-4HSbZTSqr_mHzqvh3E0nRoHCbD9KV0kIw5ZG-0y-BytRz3jF7Y8S7CkjxkddEpjYky1T9UFRMV2s0DOS0JB9E3LEqvGHOToiHb9YWV7qEhA5XtWGgYLTrrFjIqksqW8RGhRIPgxl2NMpCyP2vCBLPqhe0O29Kg",
-       "scope" : "GOOGLE",
-       "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
-       "vicinity" : "Mandaue City"
-    },
-    {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3092378,
@@ -603,6 +467,9 @@
        "vicinity" : "F. Ramos Street, Cebu City"
     },
     {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3318655,
@@ -644,7 +511,10 @@
        "vicinity" : "Wilson Street, Cebu City"
     },
     {
-       "geometry" : {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
+        "geometry" : {
           "location" : {
              "lat" : 10.318025,
              "lng" : 123.905062
@@ -681,6 +551,9 @@
        "vicinity" : "Ayala, Cebu City"
     },
     {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3189287,
@@ -722,6 +595,9 @@
        "vicinity" : "Ayala Center Cebu, The Terraces, Archbishop Reyes Ave Cebu Business Park, Cebu City"
     },
     {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3089141,
@@ -769,6 +645,9 @@
        "vicinity" : "15 B. Rodriguez Street, Cebu City"
     },
     {
+        "type" : "Fine Dining",
+        "specialty" : "Fried Chicken",
+        "customers" : 123,
        "geometry" : {
           "location" : {
              "lat" : 10.3070781,
@@ -810,6 +689,9 @@
        "vicinity" : "Osmeña Boulevard, Cebu City"
     },
     {
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
        "geometry" : {
           "location" : {
              "lat" : 10.313195,
@@ -851,6 +733,9 @@
        "vicinity" : "6 A. Climaco Street, Cebu City"
     },
     {
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.3200241,
@@ -892,6 +777,10 @@
         "vicinity" : "18 Molave Street, Camputhan, Cebu City"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.319371,
@@ -933,6 +822,10 @@
         "vicinity" : "Archbishop Reyes Avenue, Cebu City"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.3189287,
@@ -974,6 +867,10 @@
         "vicinity" : "Ayala Center Cebu, The Terraces, Archbishop Reyes Ave Cebu Business Park, Cebu City"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.318025,
@@ -1011,6 +908,10 @@
         "vicinity" : "Ayala, Cebu City"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.319479,
@@ -1052,6 +953,10 @@
         "vicinity" : "10 Apitong Street, Cebu City"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.31831,
@@ -1093,6 +998,10 @@
         "vicinity" : "SHO3, Level 4, Cebu Ayala Center, Cebu City 6000"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Sisig",
+        "customers" : 654,
         "geometry" : {
            "location" : {
               "lat" : 10.3208975,
@@ -1134,6 +1043,10 @@
         "vicinity" : "Advent Business Center, 139 Acacia Street, Kamputhaw, Cebu City, Cebu, Acacia Street, Cebu City"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318951,
@@ -1175,6 +1088,10 @@
         "vicinity" : "Ayala Center, Cebu City, 6000"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.3189926,
@@ -1212,6 +1129,10 @@
         "vicinity" : "2/F Ayala Center Cebu, Arch Bishop Reyes Street, Cebu Business Park, Cebu City 6000"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.3182485,
@@ -1249,6 +1170,10 @@
         "vicinity" : "Ayala Center Cebu, Cebu City, Cebu"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.319215,
@@ -1290,6 +1215,10 @@
         "vicinity" : "Ayala Ctr, Cebu City"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.320537,
@@ -1331,6 +1260,10 @@
         "vicinity" : "4th Floor Cebu Parklane International Hotel, Archbishop Reyes Avenue Corner Escario Street, Cebu City"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.3194509,
@@ -1372,6 +1305,10 @@
         "vicinity" : "Quest Hotel, Archibishop Reyes, Cebu City"
      },
      {
+         
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.3197088,
@@ -1414,6 +1351,9 @@
         "vicinity" : "3/F Cebu Ayala Center, PUJ Terminal, Archbishop Reyes Avenue, Cebu City"
      },
      {
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318809,
@@ -1455,6 +1395,9 @@
         "vicinity" : "Corner Tojong Street, 15 North Escario Street, Cebu City"
      },
      {
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318975,
@@ -1491,6 +1434,9 @@
         "vicinity" : "Ayala Center Cebu PUV Terminal, Archbishop Reyes Avenue, Cebu City"
      },
      {
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318975,
@@ -1527,6 +1473,9 @@
         "vicinity" : "Ayala Center Cebu PUV Terminal, Archbishop Reyes Avenue, Cebu City"
      },
      {
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318975,
@@ -1563,6 +1512,9 @@
         "vicinity" : "Ayala Center Cebu PUV Terminal, Archbishop Reyes Avenue, Cebu City"
      },
      {
+        "type" : "Buffet",
+        "specialty" : "Lechon",
+        "customers" : 754,
         "geometry" : {
            "location" : {
               "lat" : 10.318147,
@@ -1604,6 +1556,10 @@
         "vicinity" : "3rd Level Ayala Center Cebu Business Park, Cebu City, 6000, Cebu"
      },
      {
+         
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3186348,
@@ -1641,6 +1597,9 @@
         "vicinity" : "Luz -1st Level, The Terraces, Ayala Center Cebu, Cebu Business Park"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3314826,
@@ -1690,6 +1649,9 @@
         "vicinity" : "Saint Lawrence Street, La Guardia, Barangay Lahug, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.329952,
@@ -1731,6 +1693,9 @@
         "vicinity" : "Salinas Drive, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3282974,
@@ -1772,6 +1737,9 @@
         "vicinity" : "The Walk, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3287558,
@@ -1813,6 +1781,9 @@
         "vicinity" : "GF i1 Building, Jose Maria del Mar Street, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3288352,
@@ -1854,6 +1825,9 @@
         "vicinity" : "42 Salinas Drive, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3260185,
@@ -1895,6 +1869,9 @@
         "vicinity" : "Salinas Drive, Lahug, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3285249,
@@ -1936,6 +1913,9 @@
         "vicinity" : "The Walk Asia Town, Lahug, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3282915,
@@ -1978,6 +1958,9 @@
         "vicinity" : "The Walk, Abad Street, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3289086,
@@ -2026,6 +2009,9 @@
         "vicinity" : "Gov. M. Cuenco Avenue, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.328531,
@@ -2067,6 +2053,9 @@
         "vicinity" : "G/F Calyx Centre, Abad St., I.T Park, Cebu"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3301222,
@@ -2108,6 +2097,9 @@
         "vicinity" : "G/F Skyrise 4 Building 6 & 7, Padriga Street, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3280025,
@@ -2149,6 +2141,9 @@
         "vicinity" : "i2 Bldg., Jose Maria del Mar Street, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.327687,
@@ -2190,6 +2185,9 @@
         "vicinity" : "Gov. Cuenco Ave., Brgy. Kasambagan, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3253894,
@@ -2231,6 +2229,9 @@
         "vicinity" : "Lahug Gourmet Walk, Waterfront Cebu City Hotel & Casino, Salinas Drive, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3292209,
@@ -2272,6 +2273,9 @@
         "vicinity" : "42 Salinas Drive, Cebu City"
      },
      {
+        "type" : "Fast Food",
+        "specialty" : "Pizza",
+        "customers" : 87,
         "geometry" : {
            "location" : {
               "lat" : 10.3304777,
@@ -2313,6 +2317,9 @@
         "vicinity" : "West Geonzon Street, Apas, Cebu City"
      },
      {
+        "type" : "Carenderia",
+        "specialty" : "Utan Bisaya",
+        "customers" : 1051,
         "geometry" : {
            "location" : {
               "lat" : 10.3289148,
@@ -2350,6 +2357,9 @@
         "vicinity" : "GF i1 Building, Jose Maria del Mar Street, Cebu City"
      },
      {
+        "type" : "Carenderia",
+        "specialty" : "Utan Bisaya",
+        "customers" : 1051,
         "geometry" : {
            "location" : {
               "lat" : 10.32846,
@@ -2391,6 +2401,9 @@
         "vicinity" : "The Walk, Abad Street, Cebu City"
      },
      {
+        "type" : "Carenderia",
+        "specialty" : "Utan Bisaya",
+        "customers" : 1051,
         "geometry" : {
            "location" : {
               "lat" : 10.3274322,
@@ -2432,6 +2445,9 @@
         "vicinity" : "Salinas Drive, Cebu City"
      },
      {
+        "type" : "Carenderia",
+        "specialty" : "Utan Bisaya",
+        "customers" : 1051,
         "geometry" : {
            "location" : {
               "lat" : 10.329558,

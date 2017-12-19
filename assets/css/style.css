@@ -37,7 +37,7 @@
   
   #floating-panel {
     position: absolute;
-    bottom: 45%;
+    top: 50px;
     left: 10px;
     z-index: 5;
     background-color: #fff;
@@ -48,6 +48,10 @@
     line-height: 30px;
     padding-left: 10px;
     display: none;
+    cursor: move;
+  }
+  #content {
+    width: 200px;
   }
 
   #floating-panel {
@@ -62,7 +66,59 @@
   #floating-panel div.content {
     text-align: left;
     font-size: 0.9em;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
   input#radius {
-    width: 42px;
+    width: 50px;
+  }
+
+  .travel-mode-div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .travel-mode-div label:first-of-type {
+    margin: 0;
+  }
+  .travel-mode-div label{
+    padding: 0 10px;
+    width: 16.6666666667%;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .travel-mode-div p {
+    margin: 0;
+    color: #808081;
+  }
+
+  .travel-mode-div input {
+    display: none;
+  }
+  
+  .travel-mode-div label>input:checked+svg, .travel-mode-div label>input:checked~p {
+    fill: #00C0E5;
+    color: #00C0E5;
+  }
+
+  svg {
+    height: 32px;
+    width: 32px;
+    fill: #CCCCCC;
+    padding-left: 6px;
+  }
+
+  .searchby {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: 15px;
   }

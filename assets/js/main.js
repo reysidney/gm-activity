@@ -7,8 +7,12 @@ var cityCircle;
 var count;
 var prevPoint;
 var placeService;
+var sampleData;
+var selectedCoords;
+var markers_arr = [];
+var noLocation = false;
 var $radius = $('#radius');
-var $travelMode = $('#travel_mode');
+var $subType = $('#subtype_select');
 function locate() {
     navigator.geolocation.getCurrentPosition(initialize,fail);
 }
@@ -21,6 +25,7 @@ function fail() {
             longitude: 123.903832
         }
     };
+    noLocation = true;
     initialize(defaultPosition);
 }
 
@@ -29,6 +34,7 @@ function initialize(position) {
     var radius = parseInt($radius.val());
     var type = 'restaurant';
     var json = $.getJSON( "assets/json/map_style.json");
+    var restaurantJSON = $.getJSON( "assets/json/restaurants.json");
     myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     count = 0;
     directionsDisplay = new google.maps.DirectionsRenderer;
@@ -36,84 +42,99 @@ function initialize(position) {
     infowindow = new google.maps.InfoWindow();
 
     $('.radius').text(radius);
-    json.done(function(map_style){  
+
+    json.done(function(map_style) {
+        // set map options  
         var mapOptions = {
             zoom: radiusToZoom(radius),
             center: myLatLng,
             styles: map_style
         }
-
+        // initialize map
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        // add click listener for map for drawing circles
+        map.addListener('click', function(event) {    
+            drawCircle(event.latLng, radius);    
+        });
+        
+        // set map for directions
         directionsDisplay.setMap(map);
+        // set panel for directions
         directionsDisplay.setPanel(document.getElementById('right-panel'));
-        searchByRadiusType(radius, type);
-        drawSelfMarker(myLatLng);
+        // dont draw self marker if location is off
+        if(!noLocation)
+            drawSelfMarker(myLatLng);
+        // display all restaurants
+        displayRestaurantJSON(restaurantJSON);
     });
 }
 
 $radius.on('change', function () {
-    navigator.geolocation.getCurrentPosition(initialize,fail);
+    drawCircle(selectedCoords, parseInt($radius.val()));
 });
 
-$travelMode.on('change', function () {
+$subType.on('change', function () {
+    filterRestaurants($(this).val());
+});
+
+$('input[name=travel_mode]').on('change', function () {
     calculateRoute(myLatLng, prevPoint);
 });
 
-function updateMap () {
-    var radius = parseInt($radius.val());
-    var type = 'restaurant';
-    searchByRadiusType(radius, type);
+function displayRestaurantJSON (restaurantJSON) {
+    restaurantJSON.done(function(results) {
+        if(results.length > 0) {
+            sampleData = results;
+            populateTypeOption(sampleData);
+            filterRestaurants('');
+	        for (var i = 0; i < sampleData.length; i++) {
+                createMarker(sampleData[i]);
+            }
+        }
+    });
 }
 
-function drawSelfMarker (myLatLng) {
+// draw marker of current location
+function drawSelfMarker () {
+    //set marker
     var userMarker = new google.maps.Marker({
         position: myLatLng,
         map: map,
-        title: "Current Location"
+        animation: google.maps.Animation.BOUNCE,
+        title: "You are here!"
     });
-    map.fitBounds();
+
+    // draw circle within current location
+    drawCircle(myLatLng, parseInt($radius.val()));
+
+    // add info window when self marker is clicked
+    userMarker.addListener('click', function() {
+        this.setAnimation(null);
+        infowindow.setContent("You are here!");
+        infowindow.open(map, this);
+    });
 }
 
-function drawCircle(radius) {
-    if(cityCircle)
-        cityCircle.setMap(null);
+//draws a circle when user clicks the map
+function drawCircle(point, radius) {
+    clearRoutes();
+    removeCircle();
+    selectedCoords = point;
+    // set Circle
     cityCircle = new google.maps.Circle({
         strokeOpacity: 0.8,
         strokeWeight: 1,
+        strokeColor: '#3498db',
         fillOpacity: 0.35,
-        fillColor: '#FFFFFF',
+        fillColor: '#3498db',
         map: map,
-        center: myLatLng,
+        center: point,
         radius: radius,
         cursor: "hand"
     });
-}
-
-function searchByRadiusType(radius, type) {
-    placeService = new google.maps.places.PlacesService(map);
-    placeService.nearbySearch({
-        location: myLatLng,
-        radius: radius,
-        type: [type]
-    }, callback);
-    drawCircle(radius);
-}
-
-function callback(results, status, pagination) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        createMarkers(results);
-        count += results.length;
-        if (pagination.hasNextPage) {
-            pagination.nextPage();
-            $("div.content input, select").attr('disabled', 'disabled');
-        } else {
-            $("div.content input, select").removeAttr('disabled');
-        }
+    if(sampleData) {
+        filterRestaurants('');
     }
-    text_count = count + " restaurant";
-    if(count > 1)
-        text_count += "s";
-    $('#count').text(text_count);
 }
 
 function radiusToZoom(radius){
@@ -121,46 +142,71 @@ function radiusToZoom(radius){
     return Math.round(14-Math.log(radius)/Math.LN2);
 }
 
+//get Default icon for restaurants
+function getIcon() {
+    //set default icon for restaurants
+	var icon = {
+        url: "assets/images/pin.svg", //url
+        scaledSize: new google.maps.Size(50, 50), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(20,40), // anchors
+    }
+
+    return icon;
+}
+
 function createMarker(place) {
     var placeLoc = place.geometry.location;
-    var icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-        labelOrigin: new google.maps.Point(15, 40)
-    }
+    var icon = getIcon();
     var marker = new google.maps.Marker({
         map: map,
         title: place.name,
+        animation: null,
         position: placeLoc,
         icon: icon,
-        label: place.name,
     });
 
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(setMarkerContent(place, this.getPosition()));
         infowindow.open(map, this);
+        bounceMarker(this);
     });
 
     google.maps.event.addListener(marker, "rightclick", function() {
         infowindow.setContent(setMarkerContent(place, this.getPosition()));
         infowindow.open(map, this);
+        bounceMarker(this);
     });
-}
 
-function createMarkers(places) {
-    var place;
-    for (var i = 0; place = places[i]; i++) {
-        console.log(place);
-        createMarker(place);
-    }
+    markers_arr.push(marker);
 }
 
 function setMarkerContent (place, position) {
-    var result = "";
-    result += "<div>"+place.name+"<hr><a href='#' onclick='getDirections("+position.lat()+", "+ position.lng() +")' id='directions'>Get Directions</a></div>";
+    var result = '<div id="content">' +
+            '<h3 id="name">' +
+                '<b>'+place.name+'</b>' +
+            '</h3>' +
+            '<p><b>Address: </b> ' +
+                place.vicinity + 
+            '</p>'+
+            "<a href='#' onclick='getDirections("+
+                position.lat() +
+                ", "+
+                position.lng() +
+            ")' id='directions'>Get Directions</a><hr>"+
+            '<p><b>Type:</b> ' +
+                place.type + 
+            '</p>'+
+            '<p><b>Specialty: </b> ' +
+                place.specialty + 
+            '</p>'+
+            '<p><b>Visited Customers: </b> ' +
+                place.customers + 
+            '</p>'+
+            '<p><b>Ratings: </b> ' +
+                place.rating + 
+            '</p>'+
+        '</div>';
     return result;
 }
 
@@ -173,7 +219,7 @@ function calculateRoute(start, end) {
     directionsService.route({
         origin: start,
         destination: end,
-        travelMode: $travelMode.val(),
+        travelMode: $('input[name=travel_mode]:checked').val(),
     }, function(response, status) {
         if (status === 'OK') {
         directionsDisplay.setDirections(response);
@@ -183,6 +229,101 @@ function calculateRoute(start, end) {
     });
 }
 
+// filter restaurants
+function filterRestaurants(type) {
+	removeMarkers();
+    clearRoutes();
+
+	count = 0;
+
+	// loop through all sample data
+	for (var i = 0; i < sampleData.length; i++) {
+		// get restaurants matching the selected type
+		if(sampleData[i].type == type || type == '') {
+            createMarker(sampleData[i]);
+            markerCoords = new google.maps.LatLng(sampleData[i].geometry.location.lat, sampleData[i].geometry.location.lng);
+            diff = (google.maps.geometry.spherical.computeDistanceBetween(selectedCoords, markerCoords));
+            if(diff <= $radius.val()) {
+                count++;
+            }
+		}
+    }
+    updateCountDisplay(count);
+}
+
+// update count display
+function updateCountDisplay(count) {
+    text_count = count + " restaurant";
+    if(count > 1)
+        text_count += "s";
+    $('#count').text(text_count);
+}
+
+//clears current route if there is a route.
+function clearRoutes() {
+    if (directionsDisplay != null) {
+        // empty html content for directions
+        $('#right-panel').html('');
+        directionsDisplay.setMap(null);
+    }
+}
+
+// remove circle, if there is a circle
+function removeCircle() {
+	if(cityCircle != undefined) {
+    	cityCircle.setMap(null);
+    }
+}
+
+// remove markers in the map
+function removeMarkers() {
+	if(markers_arr.length > 0) {
+    	for(var i in markers_arr) {
+		   markers_arr[i].setMap(null);
+		}
+	}
+}
+
+// returns all unique values
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
+// populates options for restaurant types
+function populateTypeOption (sampleData) {
+    var options = '<option value=""> All </option>';
+    var type = [];
+    if(sampleData.length > 1) {
+        for(var i = 0; i < sampleData.length; i++) {
+            if(sampleData[i].type)
+                type.push(sampleData[i].type);
+        }
+    }
+
+    $.each( type.filter( onlyUnique ), function( key, value ) {
+        options += '<option value="'+ value + '"> ' + value + '</option>';
+    });
+    $subType.html(options);
+}
+
+// unbounces other marker and toggle bounce clicked marker
+var prevClickedMarker;
+function bounceMarker(clicked) {
+    if(prevClickedMarker)
+        prevClickedMarker.setAnimation(null);
+
+    if (clicked.getAnimation() !== null) {
+          clicked.setAnimation(null);
+    } else {
+        clicked.setAnimation(google.maps.Animation.BOUNCE);
+    }
+
+    prevClickedMarker = clicked;
+}
+
 $(document).ready(function () {
     locate();
+    $("#floating-panel").draggable({
+        cursor: 'move'
+    });
 });
