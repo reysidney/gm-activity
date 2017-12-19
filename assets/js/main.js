@@ -80,12 +80,14 @@ $radius.on('change', function () {
 
 // add change event when restaurant type is changed
 $subType.on('change', function () {
+    clearRoutes();
     filterRestaurants($(this).val());
 });
 
 // add change event when travel mode is changed
 $('input[name=travel_mode]').on('change', function () {
-    calculateRoute(myLatLng, prevPoint);
+    if(prevPoint)
+        calculateRoute(myLatLng, prevPoint);
 });
 
 // display sample data restautants
@@ -95,9 +97,6 @@ function displayRestaurantJSON (restaurantJSON) {
             sampleData = results;
             populateTypeOption(sampleData);
             filterRestaurants('');
-	        for (var i = 0; i < sampleData.length; i++) {
-                createMarker(sampleData[i]);
-            }
         }
     });
 }
@@ -125,7 +124,6 @@ function drawSelfMarker () {
 
 //draws a circle when user clicks the map
 function drawCircle(point, radius) {
-    clearRoutes();
     removeCircle();
     selectedCoords = point;
     // set Circle
@@ -231,7 +229,7 @@ function setMarkerContent (place, position) {
     return result;
 }
 
-// get direction to marker 
+// get directions to marker 
 function getDirections (lat, lng) {
     prevPoint = {lat: lat, lng: lng};
     calculateRoute(myLatLng, prevPoint);
@@ -239,6 +237,7 @@ function getDirections (lat, lng) {
 
 // calculate route
 function calculateRoute(start, end) {
+    directionsDisplay.setMap(map);
     directionsService.route({
         origin: start,
         destination: end,
@@ -255,10 +254,7 @@ function calculateRoute(start, end) {
 // filter restaurants
 function filterRestaurants(type) {
 	removeMarkers();
-    clearRoutes();
-
 	count = 0;
-
 	// loop through all sample data
 	for (var i = 0; i < sampleData.length; i++) {
 		// get restaurants matching the selected type
@@ -287,6 +283,8 @@ function clearRoutes() {
     if (directionsDisplay != null) {
         // empty html content for directions
         $('#right-panel').html('');
+        // set previous point to null
+        prevPoint = null;
         directionsDisplay.setMap(null);
     }
 }
@@ -301,7 +299,7 @@ function removeCircle() {
 // remove markers in the map
 function removeMarkers() {
 	if(markers_arr.length > 0) {
-    	for(var i in markers_arr) {
+    	for(var i = 0; i < markers_arr.length; i++) {
 		   markers_arr[i].setMap(null);
 		}
 	}
