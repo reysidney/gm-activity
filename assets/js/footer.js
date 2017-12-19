@@ -1,5 +1,4 @@
 $('#footer').show();
-
 $('#footerbuttondown').on('click', shrink);
 $('#footerbuttonup').on('click', expand);
 

@@ -9,6 +9,7 @@ var prevPoint;
 var placeService;
 var sampleData;
 var selectedCoords;
+var inspectMarker;
 var markers_arr = [];
 var $radius = $('#radius');
 var $subType = $('#subtype_select');
@@ -25,7 +26,7 @@ function fail() {
         coords: {
             latitude: 10.3193294,
             longitude: 123.903832
-        }
+        }, 
     };
     initialize(defaultPosition);
 }
@@ -105,7 +106,8 @@ function drawSelfMarker () {
         position: myLatLng,
         map: map,
         animation: google.maps.Animation.BOUNCE,
-        title: "You are here!"
+        title: "You are here!",
+        icon: getIcon("assets/images/placeholder.svg")
     });
 
     // draw circle within current location
@@ -136,6 +138,14 @@ function drawCircle(point, radius) {
         cursor: "hand"
     });
 
+    //create inspect marker
+    inspectMarker = new google.maps.Marker({
+        position: selectedCoords,
+        map: map,
+        title: "here",
+        icon: getIcon("assets/images/placeholder_inspect.svg")
+    });
+
     // update count 
     if(sampleData) {
         filterRestaurants($subType.find(":selected").val());
@@ -148,11 +158,10 @@ function radiusToZoom(radius){
     return Math.round(14-Math.log(radius)/Math.LN2);
 }
 
-//get Default icon for restaurants
-function getIcon() {
-    //set default icon for restaurants
+//set icons base on url
+function getIcon(url) {
 	var icon = {
-        url: "assets/images/pin.svg", //url
+        url: url, //url
         scaledSize: new google.maps.Size(50, 50), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(20,40), // anchors
@@ -167,7 +176,7 @@ function createMarker(place) {
     var placeLoc = place.geometry.location;
 
     //get icon
-    var icon = getIcon();
+    var icon = getIcon("assets/images/pin.svg");
     
     //set marker
     var marker = new google.maps.Marker({
@@ -256,7 +265,6 @@ function filterRestaurants(type) {
 	for (var i = 0; i < sampleData.length; i++) {
 		// get restaurants matching the selected type
 		if(sampleData[i].type == type || type == '') {
-            createMarker(sampleData[i]);
             getCountInRadius(sampleData[i]);
             
 		}
@@ -270,6 +278,7 @@ function getCountInRadius (place) {
         var markerCoords = new google.maps.LatLng(place.geometry.location.lat, place.geometry.location.lng);
         var diff = (google.maps.geometry.spherical.computeDistanceBetween(markerCoords, selectedCoords));
         if(diff <= $radius.val()) {
+            createMarker(place);
             count++;
         }
     }
@@ -297,7 +306,8 @@ function clearRoutes() {
 // remove circle, if there is a circle
 function removeCircle() {
 	if(cityCircle != undefined) {
-    	cityCircle.setMap(null);
+        cityCircle.setMap(null);
+        inspectMarker.setMap(null);
     }
 }
 
