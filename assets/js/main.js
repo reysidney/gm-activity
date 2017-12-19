@@ -10,7 +10,6 @@ var placeService;
 var sampleData;
 var selectedCoords;
 var markers_arr = [];
-var noLocation = false;
 var $radius = $('#radius');
 var $subType = $('#subtype_select');
 
@@ -28,7 +27,6 @@ function fail() {
             longitude: 123.903832
         }
     };
-    noLocation = true;
     initialize(defaultPosition);
 }
 
@@ -58,16 +56,15 @@ function initialize(position) {
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
         // add click listener for map for drawing circles
         map.addListener('click', function(event) {    
-            drawCircle(event.latLng, radius);    
+            drawCircle(event.latLng, parseInt($radius.val()));    
         });
         
         // set map for directions
         directionsDisplay.setMap(map);
         // set panel for directions
         directionsDisplay.setPanel(document.getElementById('right-panel'));
-        // dont draw self marker if location is off
-        if(!noLocation)
-            drawSelfMarker(myLatLng);
+        // draw self marker
+        drawSelfMarker(myLatLng);
         // display all restaurants
         displayRestaurantJSON(restaurantJSON);
     });
@@ -260,16 +257,22 @@ function filterRestaurants(type) {
 		// get restaurants matching the selected type
 		if(sampleData[i].type == type || type == '') {
             createMarker(sampleData[i]);
-            if(selectedCoords) {
-                markerCoords = new google.maps.LatLng(sampleData[i].geometry.location.lat, sampleData[i].geometry.location.lng);
-                diff = (google.maps.geometry.spherical.computeDistanceBetween(selectedCoords, markerCoords));
-                if(diff <= $radius.val()) {
-                    count++;
-                }
-            }
+            getCountInRadius(sampleData[i]);
+            
 		}
     }
     updateCountDisplay(count);
+}
+
+// get count within radius 
+function getCountInRadius (place) {
+    if(selectedCoords) {
+        var markerCoords = new google.maps.LatLng(place.geometry.location.lat, place.geometry.location.lng);
+        var diff = (google.maps.geometry.spherical.computeDistanceBetween(markerCoords, selectedCoords));
+        if(diff <= $radius.val()) {
+            count++;
+        }
+    }
 }
 
 // update count display
