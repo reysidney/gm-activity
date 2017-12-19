@@ -13,10 +13,13 @@ var markers_arr = [];
 var noLocation = false;
 var $radius = $('#radius');
 var $subType = $('#subtype_select');
+
+// get current location
 function locate() {
     navigator.geolocation.getCurrentPosition(initialize,fail);
 }
 
+// call when failed to get Current Location
 function fail() {
     alert('Failed to get your Location.');
     var defaultPosition = {
@@ -29,6 +32,7 @@ function fail() {
     initialize(defaultPosition);
 }
 
+// initialize all
 function initialize(position) {
     $('#floating-panel').show();
     var radius = parseInt($radius.val());
@@ -69,18 +73,22 @@ function initialize(position) {
     });
 }
 
+// add change event for when radius is changed
 $radius.on('change', function () {
     drawCircle(selectedCoords, parseInt($radius.val()));
 });
 
+// add change event when restaurant type is changed
 $subType.on('change', function () {
     filterRestaurants($(this).val());
 });
 
+// add change event when travel mode is changed
 $('input[name=travel_mode]').on('change', function () {
     calculateRoute(myLatLng, prevPoint);
 });
 
+// display sample data restautants
 function displayRestaurantJSON (restaurantJSON) {
     restaurantJSON.done(function(results) {
         if(results.length > 0) {
@@ -132,11 +140,14 @@ function drawCircle(point, radius) {
         radius: radius,
         cursor: "hand"
     });
+
+    // update count 
     if(sampleData) {
         filterRestaurants('');
     }
 }
 
+// compute zoom value base on radius
 function radiusToZoom(radius){
     radius *= 0.00035;
     return Math.round(14-Math.log(radius)/Math.LN2);
@@ -155,9 +166,15 @@ function getIcon() {
     return icon;
 }
 
+// create marker and marker events
 function createMarker(place) {
+    // get place location
     var placeLoc = place.geometry.location;
+
+    //get icon
     var icon = getIcon();
+    
+    //set marker
     var marker = new google.maps.Marker({
         map: map,
         title: place.name,
@@ -166,21 +183,25 @@ function createMarker(place) {
         icon: icon,
     });
 
+    // add click event for marker
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.setContent(setMarkerContent(place, this.getPosition()));
         infowindow.open(map, this);
         bounceMarker(this);
     });
 
+    // add right click event for marker
     google.maps.event.addListener(marker, "rightclick", function() {
         infowindow.setContent(setMarkerContent(place, this.getPosition()));
         infowindow.open(map, this);
         bounceMarker(this);
     });
 
+    // save markers for easy clearing
     markers_arr.push(marker);
 }
 
+// set marker info window
 function setMarkerContent (place, position) {
     var result = '<div id="content">' +
             '<h3 id="name">' +
@@ -210,11 +231,13 @@ function setMarkerContent (place, position) {
     return result;
 }
 
+// get direction to marker 
 function getDirections (lat, lng) {
     prevPoint = {lat: lat, lng: lng};
     calculateRoute(myLatLng, prevPoint);
 }
 
+// calculate route
 function calculateRoute(start, end) {
     directionsService.route({
         origin: start,
