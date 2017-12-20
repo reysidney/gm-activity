@@ -74,6 +74,7 @@ function initialize(position) {
 // add change event for when radius is changed
 $radius.on('change', function () {
     drawCircle(selectedCoords, parseInt($radius.val()));
+    map.setZoom(radiusToZoom(parseInt($radius.val())));
 });
 
 // add change event when restaurant type is changed
