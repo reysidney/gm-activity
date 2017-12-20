@@ -36,10 +36,10 @@
 					</label>
 				</div>
 				<div class="searchby">
-					<label>Show 
-					<select id="subtype_select"> 
-					</select>
-					<span id="type">Restaurants</span>
+					<label>Show Restaurant Type<br>
+					<input type="checkbox" name="subtype" id="all" value="" checked disabled/><label for="all">All</label>
+					<span id="subtype_select">
+					</span>
 					<hr>
 					<label for="count">There are <span id="count"> restaurants</span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
 				</div>
@@ -48,8 +48,8 @@
     <div id="right-panel"></div>
     <div id="map"></div>
 	<div id="footer"> 
-		<div id="footerbuttondown">&#9660;</div>
-		<div id="footerbuttonup">&#9650;</div>
+		<div id="footerbuttondown">Hide Pie Chart &#9660; </div>
+		<div id="footerbuttonup">Show Pie Chart &#9650;</div>
 		<div id="footercont">
 			<div id="chartContainer"></div>
 		</div>

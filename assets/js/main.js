@@ -78,8 +78,18 @@ $radius.on('change', function () {
 
 // add change event when restaurant type is changed
 $subType.on('change', function () {
+    $('input#all').removeAttr('disabled');
+    $('input#all').removeAttr('checked');
     clearRoutes();
-    filterRestaurants($(this).val());
+    filterRestaurants();
+});
+
+// add click event when type all is clicked
+$('input[type=checkbox]#all').on('click', function(){
+    $('input:checkbox').prop('checked', 'true');  
+    $('input#all').attr('disabled','true'); 
+    clearRoutes();
+    filterRestaurants(); 
 });
 
 // add change event when travel mode is changed
@@ -93,8 +103,9 @@ function displayRestaurantJSON (restaurantJSON) {
     restaurantJSON.done(function(results) {
         if(results.length > 0) {
             sampleData = results;
+            createPieChart();
             populateTypeOption(sampleData);
-            filterRestaurants($subType.find(":selected").val());
+            filterRestaurants();
         }
     });
 }
@@ -148,7 +159,7 @@ function drawCircle(point, radius) {
 
     // update count 
     if(sampleData) {
-        filterRestaurants($subType.find(":selected").val());
+        filterRestaurants();
     }
 }
 
@@ -258,15 +269,19 @@ function calculateRoute(start, end) {
 }
 
 // filter restaurants
-function filterRestaurants(type) {
+function filterRestaurants() {
 	removeMarkers();
-	count = 0;
+    count = 0;
+    //get all checked value
+    var types = $('#subtype_select input[type=checkbox]:checked').map(function () {
+        return this.value;
+    }).get();
+
 	// loop through all sample data
 	for (var i = 0; i < sampleData.length; i++) {
-		// get restaurants matching the selected type
-		if(sampleData[i].type == type || type == '') {
+        // get restaurants matching the selected type
+		if(types.indexOf(sampleData[i].type) != -1) {
             getCountInRadius(sampleData[i]);
-            
 		}
     }
     updateCountDisplay(count);
@@ -327,7 +342,7 @@ function onlyUnique(value, index, self) {
 
 // populates options for restaurant types
 function populateTypeOption (sampleData) {
-    var options = '<option value=""> All </option>';
+    var options = '';
     var type = [];
     if(sampleData.length > 1) {
         for(var i = 0; i < sampleData.length; i++) {
@@ -335,9 +350,9 @@ function populateTypeOption (sampleData) {
                 type.push(sampleData[i].type);
         }
     }
-
+    
     $.each( type.filter( onlyUnique ), function( key, value ) {
-        options += '<option value="'+ value + '"> ' + value + '</option>';
+        options += '<input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '" checked/><label for="'+ value + '">'+ value + '</label>';
     });
     $subType.html(options);
 }
@@ -357,8 +372,62 @@ function bounceMarker(clicked) {
     prevClickedMarker = clicked;
 }
 
+// process sample data to display pie chart
+function processSampleData() {
+    var array = [];
+    var type = [];
+    for(var i in sampleData) {
+        if(sampleData[i].type)
+            array.push({
+                    label : sampleData[i].type,
+                    y: 1 ,
+                    legendText: sampleData[i].type,
+                });
+    }
+    var result = [];
+    array.forEach(function(value) {
+        var existing = result.filter(function(v, i) {
+            return v.legendText == value.legendText;
+        });
+        if (existing.length) {
+            var existingIndex = result.indexOf(existing[0]);
+            result[existingIndex].y += value.y;
+        } else {
+            result.push(value);
+        }
+    });
+    return result;
+}
+
+// create pie chart for types of restaurant
+function createPieChart() {
+    $("#chartContainer").CanvasJSChart({ 
+		title: { 
+			text: "Restaurant Types in Cebu",
+			fontSize: 24
+		}, 
+		axisY: { 
+			title: "Restaurant Type" 
+		}, 
+		legend :{ 
+			verticalAlign: "center", 
+			horizontalAlign: "right" 
+		}, 
+		data: [ 
+            { 
+                type: "pie", 
+                showInLegend: true, 
+                toolTipContent: "{label} <br/> {y} restaurants", 
+                indexLabel: "{y} restaurants", 
+                dataPoints: processSampleData()
+            } 
+		] 
+	}); 
+}
+
 $(document).ready(function () {
     locate();
+
     $("#floating-panel").draggable({
         cursor: 'move'
     });
