@@ -285,7 +285,9 @@ function filterRestaurants() {
             getCountInRadius(sampleData[i]);
 		}
     }
-    updateCountDisplay(count);
+    
+    infowindow.setContent("There " + updateCountDisplay(count) + " within " + $radius.val() + " meters. ");
+    infowindow.open(map, inspectMarker);
 }
 
 // get count within radius 
@@ -302,10 +304,13 @@ function getCountInRadius (place) {
 
 // update count display
 function updateCountDisplay(count) {
-    text_count = count + " restaurant";
+    text_count = "is only " + count + " restaurant";
     if(count > 1)
-        text_count += "s";
+        text_count = "are " + count + " restaurants";
+    else if(count == 0) 
+        text_count = "are no restaurants";
     $('#count').text(text_count);
+    return text_count;
 }
 
 //clears current route if there is a route.
@@ -412,14 +417,15 @@ function createPieChart() {
 		}, 
 		legend :{ 
 			verticalAlign: "center", 
-			horizontalAlign: "right" 
+            horizontalAlign: "right",
+            title: "Type of Restaurant"
 		}, 
 		data: [ 
             { 
                 type: "pie", 
                 showInLegend: true, 
                 toolTipContent: "{label} <br/> {y} restaurants", 
-                indexLabel: "{y} restaurants", 
+                indexLabel: "{y} {label} restaurants", 
                 dataPoints: processSampleData()
             } 
 		] 

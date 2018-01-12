@@ -41,7 +41,7 @@
 					<span id="subtype_select">
 					</span>
 					<hr>
-					<label for="count">There are <span id="count"> restaurants</span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
+					<label for="count">There <span id="count"></span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
 				</div>
 			</div>
     </div>
