@@ -75,6 +75,7 @@ function initialize(position) {
 $radius.on('change', function () {
     drawCircle(selectedCoords, parseInt($radius.val()));
     map.setZoom(radiusToZoom(parseInt($radius.val())));
+    map.setCenter(selectedCoords);
 });
 
 // add change event when restaurant type is changed
@@ -285,9 +286,9 @@ function filterRestaurants() {
             getCountInRadius(sampleData[i]);
 		}
     }
-    
-    infowindow.setContent("There " + updateCountDisplay(count) + " within " + $radius.val() + " meters. ");
-    infowindow.open(map, inspectMarker);
+    updateCountDisplay(count);
+    // infowindow.setContent("There " + updateCountDisplay(count) + " within " + $radius.val() + " meters. ");
+    // infowindow.open(map, inspectMarker);
 }
 
 // get count within radius 
