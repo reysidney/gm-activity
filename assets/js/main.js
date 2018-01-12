@@ -425,7 +425,7 @@ function createPieChart() {
                 type: "pie", 
                 showInLegend: true, 
                 toolTipContent: "{label} <br/> {y} restaurants", 
-                indexLabel: "{label} restaurants", 
+                indexLabel: "{y} {label} restaurants", 
                 dataPoints: processSampleData()
             } 
 		] 
