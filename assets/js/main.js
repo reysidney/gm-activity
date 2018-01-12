@@ -67,7 +67,7 @@ function initialize(position) {
         // draw self marker
         drawSelfMarker(myLatLng);
         // display all restaurants
-        displayRestaurantJSON(restaurantJSON);
+        //displayRestaurantJSON(restaurantJSON);
     });
 }
 
@@ -102,18 +102,10 @@ $('input[name=travel_mode]').on('change', function () {
 
 // display sample data restautants
 function displayRestaurantJSON (restaurantJSON) {
-    // restaurantJSON.done(function(results) {
-    //     if(results.length > 0) {
-    //         sampleData = results;
-    //         createPieChart();
-    //         populateTypeOption(sampleData);
-    //         filterRestaurants();
-    //     }
-    // });
-    getRestaurants().done(function(results) {
-        data = results.data;
-        if(data.length > 0) {
-            sampleData = data;
+    restaurantJSON.done(function(results) {
+        if(results.length > 0) {
+            sampleData = results;
+            createPieChart();
             populateTypeOption(sampleData);
             filterRestaurants();
         }
@@ -122,14 +114,33 @@ function displayRestaurantJSON (restaurantJSON) {
 
 //get restaurants
 function getRestaurants () {
-    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-    var API_KEY = "AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c";
-    return $.ajax({
-        url: url,
-        type: "get",
-        data: {location: selectedCoords.lat() + ","+selectedCoords.lng(), radius: $radius.val(), type: "restaurant", key: API_KEY },
-        dataType: 'json'
-    });
+	removeMarkers();
+    count = 0;
+    updateCountDisplay(count);
+    var request = {
+        location: selectedCoords,
+        radius: $radius.val(),
+        types: ['restaurant']
+    };
+    
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callbackNearbySearch);
+}
+
+//callback function for nearbysearch
+function callbackNearbySearch (results, status, pagination) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+        results.forEach(createMarker);
+        updateCountDisplay(count);
+        if(pagination.hasNextPage) {
+            $('.bg_overlay_alt').removeClass('is_hide').addClass('is_show');
+            $('body').addClass('no_scroll');
+            pagination.nextPage();
+        } else {
+            $('.bg_overlay_alt').addClass('is_hide').removeClass('is_show');
+            $('body').removeClass('no_scroll');
+        }
+    }
 }
 
 // draw marker of current location
@@ -180,9 +191,11 @@ function drawCircle(point, radius) {
     });
 
     // update count 
-    if(sampleData) {
-        filterRestaurants();
-    }
+    // if(sampleData) {
+    //     filterRestaurants();
+    // }
+    
+    getRestaurants();
 }
 
 // compute zoom value base on radius
@@ -205,6 +218,7 @@ function getIcon(url) {
 
 // create marker and marker events
 function createMarker(place) {
+
     // get place location
     var placeLoc = place.geometry.location;
 
@@ -236,6 +250,7 @@ function createMarker(place) {
 
     // save markers for easy clearing
     markers_arr.push(marker);
+    count++;
 }
 
 // set marker info window
@@ -247,23 +262,23 @@ function setMarkerContent (place, position) {
             '<p><b>Address: </b> ' +
                 place.vicinity + 
             '</p>'+
+            '<p><b>Ratings: </b> ' +
+                place.rating + 
+            '</p>'+
             "<a href='#' onclick='getDirections("+
                 position.lat() +
                 ", "+
                 position.lng() +
-            ")' id='directions'>Get Directions</a><hr>"+
-            '<p><b>Type:</b> ' +
-                place.type + 
-            '</p>'+
-            '<p><b>Specialty: </b> ' +
-                place.specialty + 
-            '</p>'+
-            '<p><b>Visited Customers: </b> ' +
-                place.customers + 
-            '</p>'+
-            '<p><b>Ratings: </b> ' +
-                place.rating + 
-            '</p>'+
+            ")' id='directions'>Get Directions</a>"+
+            // '<hr><p><b>Type:</b> ' +
+            //     place.type + 
+            // '</p>'+
+            // '<p><b>Specialty: </b> ' +
+            //     place.specialty + 
+            // '</p>'+
+            // '<p><b>Visited Customers: </b> ' +
+            //     place.customers + 
+            // '</p>'+
         '</div>';
     return result;
 }

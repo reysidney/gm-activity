@@ -8,6 +8,12 @@
 	</head>
 	<body>
 		<input type="hidden" id="baseurl" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>"/>
+		<div class="bg_overlay_alt is_hide">
+			<div class="loader">
+				<img src="assets/images/loader.svg">
+				<p>Getting all restaurants. Please wait...</p>
+			</div>
+		</div>
 		<div id="floating-panel">
 			<strong>Restaurants</strong>
 			<hr>

@@ -251,3 +251,47 @@ svg {
 label:hover:before {
   border: 2px solid #4778d9!important;
 }
+
+.is_show.bg_overlay_alt {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+}
+.bg_overlay_alt {
+    background: rgba(255, 255, 255, 0.5);
+}
+.bg_overlay_alt{
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(75, 75, 75, 0.8);
+    z-index: 900;
+    -webkit-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+
+.loader > p {
+    color : #FFF;
+}
