@@ -102,13 +102,33 @@ $('input[name=travel_mode]').on('change', function () {
 
 // display sample data restautants
 function displayRestaurantJSON (restaurantJSON) {
-    restaurantJSON.done(function(results) {
-        if(results.length > 0) {
-            sampleData = results;
-            createPieChart();
+    // restaurantJSON.done(function(results) {
+    //     if(results.length > 0) {
+    //         sampleData = results;
+    //         createPieChart();
+    //         populateTypeOption(sampleData);
+    //         filterRestaurants();
+    //     }
+    // });
+    getRestaurants().done(function(results) {
+        data = results.data;
+        if(data.length > 0) {
+            sampleData = data;
             populateTypeOption(sampleData);
             filterRestaurants();
         }
+    });
+}
+
+//get restaurants
+function getRestaurants () {
+    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
+    var API_KEY = "AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c";
+    return $.ajax({
+        url: url,
+        type: "get",
+        data: {location: selectedCoords.lat() + ","+selectedCoords.lng(), radius: $radius.val(), type: "restaurant", key: API_KEY },
+        dataType: 'json'
     });
 }
 
@@ -287,8 +307,6 @@ function filterRestaurants() {
 		}
     }
     updateCountDisplay(count);
-    // infowindow.setContent("There " + updateCountDisplay(count) + " within " + $radius.val() + " meters. ");
-    // infowindow.open(map, inspectMarker);
 }
 
 // get count within radius 

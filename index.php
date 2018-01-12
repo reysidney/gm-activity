@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Restaurants in CEBU</title>
+    <title>Restaurants</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 	<link type="text/css" rel="stylesheet" href="assets/css/style.css" />
@@ -9,7 +9,7 @@
 	<body>
 		<input type="hidden" id="baseurl" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>"/>
 		<div id="floating-panel">
-			<strong>Restaurants in CEBU</strong>
+			<strong>Restaurants</strong>
 			<hr>
 			<div class="content">
 				<div class="travel-mode-div">
