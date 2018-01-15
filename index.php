@@ -53,13 +53,13 @@
     </div>
     <div id="right-panel"></div>
     <div id="map"></div>
-	<div id="footer"> 
+	<!-- <div id="footer"> 
 		<div id="footerbuttondown">Hide Pie Chart &#9660; </div>
 		<div id="footerbuttonup">Show Pie Chart &#9650;</div>
 		<div id="footercont">
 			<div id="chartContainer"></div>
 		</div>
-	</div>
+	</div> -->
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
