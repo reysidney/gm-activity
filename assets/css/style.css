@@ -252,6 +252,10 @@ label:hover:before {
   border: 2px solid #4778d9!important;
 }
 
+.hide {
+    display: none !important;
+}
+
 .is_show.bg_overlay_alt {
     opacity: 1;
     visibility: visible;
@@ -294,4 +298,29 @@ label:hover:before {
 
 .loader > p {
     color : #FFF;
+}
+
+.show-menu {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    z-index: 5;
+    cursor: pointer;
+    background: #fff;
+    padding: 5px 10px;
+    font-size: 20px;
+    color: #3498db;
+}
+
+.close-menu {
+    font-size: 27px;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #3498db;
+}
+
+#floating-panel strong {
+    color: #3498db;
+    font-size: 20px;
 }

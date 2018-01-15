@@ -100,6 +100,17 @@ $('input[name=travel_mode]').on('change', function () {
         calculateRoute(myLatLng, prevPoint);
 });
 
+//open nav menu
+$('.show-menu').on('click', function () {
+    $(this).addClass('hide');
+    $('#floating-panel').removeClass('hide');
+});
+
+$('.close-menu').on('click', function () {
+    $('.show-menu').removeClass('hide');
+    $('#floating-panel').addClass('hide');
+});
+
 // display sample data restautants
 function displayRestaurantJSON (restaurantJSON) {
     restaurantJSON.done(function(results) {
@@ -133,11 +144,11 @@ function callbackNearbySearch (results, status, pagination) {
         results.forEach(createMarker);
         updateCountDisplay(count);
         if(pagination.hasNextPage) {
-            $('.bg_overlay_alt').removeClass('is_hide').addClass('is_show');
+            $('.bg_overlay_alt').addClass('is_show');
             $('body').addClass('no_scroll');
             pagination.nextPage();
         } else {
-            $('.bg_overlay_alt').addClass('is_hide').removeClass('is_show');
+            $('.bg_overlay_alt').removeClass('is_show');
             $('body').removeClass('no_scroll');
         }
     }

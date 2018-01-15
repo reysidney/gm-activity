@@ -8,14 +8,18 @@
 	</head>
 	<body>
 		<input type="hidden" id="baseurl" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>"/>
-		<div class="bg_overlay_alt is_hide">
+		<div class="bg_overlay_alt">
 			<div class="loader">
 				<img src="assets/images/loader.svg">
 				<p>Getting all restaurants. Please wait...</p>
 			</div>
 		</div>
+		<div class="show-menu hide">
+			<span>&#9776; Restaurants</span>
+		</div>
 		<div id="floating-panel">
 			<strong>Restaurants</strong>
+			<span class="close-menu">&times;</span>
 			<hr>
 			<div class="content">
 				<div class="travel-mode-div">
@@ -50,16 +54,16 @@
 					<label for="count">There <span id="count"></span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
 				</div>
 			</div>
-    </div>
-    <div id="right-panel"></div>
-    <div id="map"></div>
-	<!-- <div id="footer"> 
-		<div id="footerbuttondown">Hide Pie Chart &#9660; </div>
-		<div id="footerbuttonup">Show Pie Chart &#9650;</div>
-		<div id="footercont">
-			<div id="chartContainer"></div>
 		</div>
-	</div> -->
+		<div id="right-panel"></div>
+		<div id="map"></div>
+		<!-- <div id="footer"> 
+			<div id="footerbuttondown">Hide Pie Chart &#9660; </div>
+			<div id="footerbuttonup">Show Pie Chart &#9650;</div>
+			<div id="footercont">
+				<div id="chartContainer"></div>
+			</div>
+		</div> -->
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
