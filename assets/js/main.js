@@ -258,8 +258,11 @@ function setMarkerContent (place, position) {
     var images = "";
     var ratings = "";
     if(place.photos !== undefined) {
+        var url = place.photos[0].getUrl({'maxWidth': 1000, 'maxHeight': 1000});
         images = '<p>'+
-            '<image src="'+place.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200})+'">' + 
+            '<a href="'+url+'" target="_blank">' +
+            '   <image src="'+url+'" style="width:200px;">'+
+            '</a>' + 
         '</p>';
     }
     if(place.rating !== undefined) {
