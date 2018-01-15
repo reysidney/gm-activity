@@ -255,6 +255,18 @@ function createMarker(place) {
 
 // set marker info window
 function setMarkerContent (place, position) {
+    var images = "";
+    var ratings = "";
+    if(place.photos !== undefined) {
+        images = '<p>'+
+            '<image src="'+place.photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200})+'">' + 
+        '</p>';
+    }
+    if(place.rating !== undefined) {
+        ratings = '<p><b>Ratings: </b> ' +
+            place.rating + 
+        '</p>';
+    }
     var result = '<div id="content">' +
             '<h3 id="name">' +
                 '<b>'+place.name+'</b>' +
@@ -262,15 +274,14 @@ function setMarkerContent (place, position) {
             '<p><b>Address: </b> ' +
                 place.vicinity + 
             '</p>'+
-            '<p><b>Ratings: </b> ' +
-                place.rating + 
-            '</p>'+
+            ratings +
             "<a href='#' onclick='getDirections("+
                 position.lat() +
                 ", "+
                 position.lng() +
-            ")' id='directions'>Get Directions</a>"+
-            // '<hr><p><b>Type:</b> ' +
+            ")' id='directions'>Get Directions</a><hr>"+
+            images +
+            // '<p><b>Type:</b> ' +
             //     place.type + 
             // '</p>'+
             // '<p><b>Specialty: </b> ' +
