@@ -144,7 +144,6 @@ function getRestaurants () {
         radius: $radius.val(),
         query: types.join(' restaurant OR ') + " restaurant"
     };
-    alert(request.query);
     service = new google.maps.places.PlacesService(map);
     service.textSearch(request, callbackTextSearch);
 }
