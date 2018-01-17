@@ -36,8 +36,8 @@ function initialize(position) {
     $('#floating-panel').show();
     var radius = parseInt($radius.val());
     var type = 'restaurant';
-    var json = $.getJSON( "assets/json/map_style.json");
-    var restaurantJSON = $.getJSON( "assets/json/restaurants.json");
+    var map_style = $.getJSON( "assets/json/map_style.json");
+    //var restaurantJSON = $.getJSON( "assets/json/restaurants.json");
     myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     count = 0;
     directionsDisplay = new google.maps.DirectionsRenderer;
@@ -46,7 +46,7 @@ function initialize(position) {
 
     $('.radius').text(radius);
 
-    json.done(function(map_style) {
+    map_style.done(function(map_style) {
         // set map options  
         var mapOptions = {
             zoom: radiusToZoom(radius),
@@ -57,7 +57,7 @@ function initialize(position) {
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
         // add click listener for map for drawing circles
         map.addListener('click', function(event) {    
-            drawCircle(event.latLng, parseInt($radius.val()));    
+            cityCircle.setCenter(event.latLng); 
         });
         
         // set map for directions
@@ -67,31 +67,31 @@ function initialize(position) {
         // draw self marker
         drawSelfMarker(myLatLng);
         // display all restaurants
+        populateTypeOption();
+        getRestaurants();
         //displayRestaurantJSON(restaurantJSON);
     });
 }
 
 // add change event for when radius is changed
 $radius.on('change', function () {
-    drawCircle(selectedCoords, parseInt($radius.val()));
+    cityCircle.setRadius(parseInt($(this).val()));
     map.setZoom(radiusToZoom(parseInt($radius.val())));
     map.setCenter(selectedCoords);
 });
 
 // add change event when restaurant type is changed
 $subType.on('change', function () {
-    $('input#all').removeAttr('disabled');
-    $('input#all').removeAttr('checked');
+    $('input#all').removeAttr('checked'); 
     clearRoutes();
-    filterRestaurants();
+    getRestaurants();
 });
 
 // add click event when type all is clicked
 $('input[type=checkbox]#all').on('click', function(){
-    $('input:checkbox').prop('checked', 'true');  
-    $('input#all').attr('disabled','true'); 
+    $('input:checkbox').not($(this)).removeAttr('checked');
     clearRoutes();
-    filterRestaurants(); 
+    getRestaurants();
 });
 
 // add change event when travel mode is changed
@@ -123,26 +123,37 @@ function displayRestaurantJSON (restaurantJSON) {
     });
 }
 
+//get restaurant types
+function getRestoTypes () {
+    var types = $('input[name="subtype"]:checked').map(function () {
+        return this.value;
+    }).get();
+    return types;
+}
+
 //get restaurants
 function getRestaurants () {
 	removeMarkers();
     count = 0;
     sampleData = [];
     updateCountDisplay(count);
+
+    var types = getRestoTypes();
     var request = {
         location: selectedCoords,
         radius: $radius.val(),
+        query: types.join('|'),
         types: ['restaurant']
     };
+    
     service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callbackNearbySearch);
+    service.textSearch(request, callbackTextSearch);
 }
 
-//callback function for nearbysearch
-function callbackNearbySearch (results, status, pagination) {
+//callback function for textSearch
+function callbackTextSearch (results, status, pagination) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        results.forEach(createMarker);
-        $.merge(sampleData, results);
+        results.forEach(getCountInRadius);
 
         if(pagination.hasNextPage) {
             $('.bg_overlay_alt').addClass('is_show');
@@ -152,8 +163,8 @@ function callbackNearbySearch (results, status, pagination) {
             $('.bg_overlay_alt').removeClass('is_show');
             $('body').removeClass('no_scroll');
             
-            populateTypeOption();
             updateCountDisplay(count);
+            createPieChart();
         }
     }
 }
@@ -187,14 +198,28 @@ function drawCircle(point, radius) {
     // set Circle
     cityCircle = new google.maps.Circle({
         strokeOpacity: 0.8,
-        strokeWeight: 1,
+        strokeWeight: 2,
         strokeColor: '#3498db',
         fillOpacity: 0.35,
         fillColor: '#3498db',
         map: map,
         center: point,
         radius: radius,
-        cursor: "hand"
+        cursor: "hand",
+        editable: true
+    });
+
+    //event listener for when circle's radius changes
+    google.maps.event.addListener(cityCircle, 'radius_changed', function() {
+        $radius.val(this.getRadius().toFixed(0));
+        getRestaurants();
+    });
+
+    //event listener for when circle's center changes
+    google.maps.event.addListener(cityCircle, 'center_changed', function() {
+        selectedCoords = this.getCenter();
+        inspectMarker.setPosition(selectedCoords);
+        getRestaurants();
     });
 
     //create inspect marker
@@ -204,19 +229,12 @@ function drawCircle(point, radius) {
         title: "here",
         icon: getIcon("assets/images/placeholder_inspect.svg")
     });
-
-    // update count 
-    // if(sampleData) {
-    //     filterRestaurants();
-    // }
-    
-    getRestaurants();
 }
 
 // compute zoom value base on radius
 function radiusToZoom(radius){
     radius *= 0.00035;
-    return Math.round(14-Math.log(radius)/Math.LN2);
+    return Math.round(14-Math.log(radius)/Math.LN2) - 1;
 }
 
 //set icons base on url
@@ -226,6 +244,7 @@ function getIcon(url) {
         scaledSize: new google.maps.Size(50, 50), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(20,40), // anchors
+        labelOrigin: new google.maps.Point(20,-10)
     }
 
     return icon;
@@ -233,7 +252,6 @@ function getIcon(url) {
 
 // create marker and marker events
 function createMarker(place) {
-
     // get place location
     var placeLoc = place.geometry.location;
 
@@ -246,7 +264,7 @@ function createMarker(place) {
         title: place.name,
         animation: null,
         position: placeLoc,
-        icon: icon,
+        icon: icon
     });
 
     // add click event for marker
@@ -262,7 +280,8 @@ function createMarker(place) {
         infowindow.open(map, this);
         bounceMarker(this);
     });
-
+    
+    sampleData.push(place);
     // save markers for easy clearing
     markers_arr.push(marker);
     count++;
@@ -272,6 +291,8 @@ function createMarker(place) {
 function setMarkerContent (place, position) {
     var images = "";
     var ratings = "";
+    var prices = "";
+    var pricesArr = ['Free', 'Inexpensive', 'Moderate', 'Expensive', 'Very Expensive'];
     if(place.photos !== undefined) {
         var url = place.photos[0].getUrl({'maxWidth': 1000, 'maxHeight': 1000});
         images = '<p>'+
@@ -285,29 +306,26 @@ function setMarkerContent (place, position) {
             place.rating + 
         '</p>';
     }
+
+    if(place.price_level !== undefined) {
+        prices = '<p><b>Price Level: </b> ' +
+            pricesArr[parseInt(place.price_level)] + 
+        '</p>';
+    }
     var result = '<div id="content">' +
             '<h3 id="name">' +
                 '<b>'+place.name+'</b>' +
             '</h3>' +
             '<p><b>Address: </b> ' +
-                place.vicinity + 
+                place.formatted_address + 
             '</p>'+
-            ratings +
+            ratings + prices +
             "<a href='#' onclick='getDirections("+
                 position.lat() +
                 ", "+
                 position.lng() +
             ")' id='directions'>Get Directions</a><hr>"+
             images +
-            // '<p><b>Type:</b> ' +
-            //     place.type + 
-            // '</p>'+
-            // '<p><b>Specialty: </b> ' +
-            //     place.specialty + 
-            // '</p>'+
-            // '<p><b>Visited Customers: </b> ' +
-            //     place.customers + 
-            // '</p>'+
         '</div>';
     return result;
 }
@@ -339,14 +357,12 @@ function filterRestaurants() {
     removeMarkers();
     count = 0;
     //get all checked value
-    var types = $('#subtype_select input[type=checkbox]:checked').map(function () {
-        return this.value;
-    }).get();
+    var types = getRestoTypes();
 
 	// loop through all sample data
-	for (var i = 0; i < sampleData.length; i++) {
+	for (var i in sampleData) {
         // get restaurants matching the selected type
-		if(types.indexOf("" +sampleData[i].type) != -1) {
+		if(types.indexOf("" +sampleData[i].types) != -1) {
             getCountInRadius(sampleData[i]);
 		}
     }
@@ -355,13 +371,12 @@ function filterRestaurants() {
 
 // get count within radius 
 function getCountInRadius (place) {
-    //if(selectedCoords) {
-        //var markerCoords = new google.maps.LatLng(place.geometry.location.lat, place.geometry.location.lng);
-        //var diff = (google.maps.geometry.spherical.computeDistanceBetween(markerCoords, selectedCoords));
-        //if(diff <= $radius.val()) {
+    if(selectedCoords) {
+        var diff = (google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, selectedCoords));
+        if(diff <= $radius.val()) {
             createMarker(place);
-        //}
-    //}
+        }
+    }
 }
 
 // update count display
@@ -411,17 +426,21 @@ function onlyUnique(value, index, self) {
 // populates options for restaurant types
 function populateTypeOption () {
     var options = '';
-    var type = [];
-    if(sampleData.length > 1) {
-        for(var i = 0; i < sampleData.length; i++) {
-            if(sampleData[i].type)
-                type.push(sampleData[i].type);
-        }
-    }
+    var type = ['Mexican', 'French', 'Chinese', 'Italian'];
+
+    // if(sampleData.length > 1) {
+    //     for(var i = 0; i < sampleData.length; i++) {
+    //         if(sampleData[i].type)
+    //             type.push(sampleData[i].type);
+    //     }
+    // }
+
     type.sort();
+
     $.each( type.filter( onlyUnique ), function( key, value ) {
-        options += '<input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '" checked/><label for="'+ value + '">'+ value + '</label>';
+        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '"/><label for="'+ value + '">'+ value + '</label>';
     });
+
     $subType.html(options);
 }
 
@@ -445,12 +464,19 @@ function processSampleData() {
     var array = [];
     var type = [];
     for(var i in sampleData) {
-        if(sampleData[i].type)
+        if(sampleData[i].opening_hours) {
             array.push({
-                    label : sampleData[i].type,
-                    y: 1 ,
-                    legendText: sampleData[i].type,
-                });
+                label : sampleData[i].opening_hours.open_now ? "Open" : "Close",
+                y: 1 ,
+                legendText: sampleData[i].opening_hours.open_now ? "Open" : "Close",
+            });
+        } else {
+            array.push({
+                label : "No Schedule",
+                y: 1 ,
+                legendText: "No Schedule",
+            });
+        }
     }
     var result = [];
     array.forEach(function(value) {
@@ -464,6 +490,7 @@ function processSampleData() {
             result.push(value);
         }
     });
+    
     return result;
 }
 
@@ -471,23 +498,20 @@ function processSampleData() {
 function createPieChart() {
     $("#chartContainer").CanvasJSChart({ 
 		title: { 
-			text: "Restaurant Types in Cebu",
+			text: "Restaurants Open Right Now (within the circle)",
 			fontSize: 24
-		}, 
-		axisY: { 
-			title: "Restaurant Type" 
 		}, 
 		legend :{ 
 			verticalAlign: "center", 
             horizontalAlign: "right",
-            title: "Type of Restaurant"
+            title: "Restaurants"
 		}, 
 		data: [ 
             { 
                 type: "pie", 
                 showInLegend: true, 
-                toolTipContent: "{y} restaurants", 
-                indexLabel: "{label} restaurants", 
+                toolTipContent: "{label} Restaurants", 
+                indexLabel: "{y} {label}", 
                 dataPoints: processSampleData()
             } 
 		] 

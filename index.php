@@ -4,7 +4,7 @@
 		<title>Restaurants</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="assets/css/style.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/style.css?v=2.0" />
 	</head>
 	<body>
 		<input type="hidden" id="baseurl" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>"/>
@@ -45,30 +45,34 @@
 						<p> &nbsp;transit</p>
 					</label>
 				</div>
+				<hr>
 				<div class="searchby">
-					<label>Show Restaurant Type<br>
-					<input type="checkbox" name="subtype" id="all" value="" checked disabled/><label for="all">All</label>
-					<span id="subtype_select">
-					</span>
-					<hr>
+					<label>Restaurant Types:
+					</label><br>
+					<input type="checkbox" name="subtype" id="all" value="" checked/>
+					<label for="all">All</label>
+					<span id="subtype_select"></span>
+				</div>
+				<hr>
+				<div class="searchby">
 					<label for="count">There <span id="count"></span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
 				</div>
 			</div>
 		</div>
 		<div id="right-panel"></div>
 		<div id="map"></div>
-		<!-- <div id="footer"> 
+		<div id="footer"> 
 			<div id="footerbuttondown">Hide Pie Chart &#9660; </div>
 			<div id="footerbuttonup">Show Pie Chart &#9650;</div>
 			<div id="footercont">
 				<div id="chartContainer"></div>
 			</div>
-		</div> -->
+		</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="assets/js/main.js"></script>
-	<script src="assets/js/footer.js"></script>
+	<script src="assets/js/main.js?v=2.0"></script>
+	<script src="assets/js/footer.js?v=2.0"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c" async defer></script>
 </html>
