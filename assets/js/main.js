@@ -125,7 +125,7 @@ function displayRestaurantJSON (restaurantJSON) {
 
 //get restaurant types
 function getRestoTypes () {
-    var types = $('input[name="subtype"]:checked').map(function () {
+    var types = $('#subtype_select input[name="subtype"]:checked').map(function () {
         return this.value;
     }).get();
     return types;
@@ -142,10 +142,9 @@ function getRestaurants () {
     var request = {
         location: selectedCoords,
         radius: $radius.val(),
-        query: types.join('|'),
-        types: ['restaurant']
+        query: types.join(' restaurant OR ') + " restaurant"
     };
-    
+    alert(request.query);
     service = new google.maps.places.PlacesService(map);
     service.textSearch(request, callbackTextSearch);
 }
