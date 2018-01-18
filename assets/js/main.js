@@ -455,14 +455,14 @@ function populateTypeOption () {
     special.sort();
 
     $.each( type.filter( onlyUnique ), function( key, value ) {
-        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '"/><label for="'+ value + '">'+ value + '</label>';
+        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '" checked/><label for="'+ value + '">'+ value + '</label>';
     });
 
     $subType.html(options);
 
     options = '';
     $.each( special.filter( onlyUnique ), function( key, value ) {
-        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '"/><label for="'+ value + '">'+ value + '</label>';
+        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '" checked/><label for="'+ value + '">'+ value + '</label>';
     });
 
     $subSpecial.html(options);
