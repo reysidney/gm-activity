@@ -161,11 +161,13 @@ function removeRestaurantsByType (type) {
         if(sampleData[i].type == type) {
             markers_arr[i].setMap(null);
             markers_arr[i] = null;
-            sampleData[i].type = null;
+            sampleData[i] = null;
             count--;
             i--;
         }
     }
+    sampleData = sampleData.filter(n => n);
+    markers_arr = markers_arr.filter(n => n);
     createPieChart();
     updateCountDisplay(count);
 }
