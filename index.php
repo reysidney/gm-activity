@@ -79,5 +79,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="assets/js/main.js?v=2.02"></script>
 	<script src="assets/js/footer.js?v=2.01"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyCJxBoIexbK05cx5EjCchyWAnIrX-zactI" async defer></script>
+	<!-- AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c -->
+	<!-- AIzaSyCJxBoIexbK05cx5EjCchyWAnIrX-zactI -->
 </html>
