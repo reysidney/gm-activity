@@ -13,6 +13,7 @@ var inspectMarker;
 var markers_arr = [];
 var $radius = $('#radius');
 var $subType = $('#subtype_select');
+var $subSpecial = $('#subspecial_select');
 
 // get current location
 function locate() {
@@ -60,10 +61,11 @@ function initialize(position) {
             cityCircle.setCenter(event.latLng); 
         });
         
+        placeService = new google.maps.places.PlacesService(map);
         // set map for directions
         directionsDisplay.setMap(map);
         // set panel for directions
-        directionsDisplay.setPanel(document.getElementById('right-panel'));
+        //directionsDisplay.setPanel(document.getElementById('right-panel'));
         // draw self marker
         drawSelfMarker(myLatLng);
         // display all restaurants
@@ -80,18 +82,12 @@ $radius.on('change', function () {
     map.setCenter(selectedCoords);
 });
 
-// add change event when restaurant type is changed
-$subType.on('change', function () {
-    $('input#all').removeAttr('checked'); 
-    clearRoutes();
-    getRestaurants();
-});
-
-// add click event when type all is clicked
-$('input[type=checkbox]#all').on('click', function(){
-    $('input:checkbox').not($(this)).removeAttr('checked');
-    clearRoutes();
-    getRestaurants();
+// add change event when restaurant type/specialty is changed
+$('#subtype_select, #subspecial_select').on('change', 'input[name=subtype]', function () {
+    if(this.checked)
+        getRestaurantsByType(this.value);
+    else 
+        removeRestaurantsByType(this.value);
 });
 
 // add change event when travel mode is changed
@@ -125,7 +121,7 @@ function displayRestaurantJSON (restaurantJSON) {
 
 //get restaurant types
 function getRestoTypes () {
-    var types = $('#subtype_select input[name="subtype"]:checked').map(function () {
+    var types = $('input[name="subtype"]:checked').map(function () {
         return this.value;
     }).get();
     return types;
@@ -139,31 +135,58 @@ function getRestaurants () {
     updateCountDisplay(count);
 
     var types = getRestoTypes();
+    for(var i in types) {
+        getRestaurantsByType(types[i]);
+    }
+}
+
+//get restaurants by type
+function getRestaurantsByType (type) {
     var request = {
         location: selectedCoords,
         radius: $radius.val(),
-        query: types.join(' restaurant OR ') + " restaurant"
+        query: type + " restaurant"
     };
-    service = new google.maps.places.PlacesService(map);
-    service.textSearch(request, callbackTextSearch);
+
+    placeService.textSearch(request, function (results, status, pagination) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            callbackTextSearch(results, pagination, type);
+        }
+    });
+}
+
+//remove restaurants by type
+function removeRestaurantsByType (type) {
+    for(var i in sampleData) {
+        if(sampleData[i].type == type) {
+            markers_arr[i].setMap(null);
+            markers_arr[i] = null;
+            sampleData[i].type = null;
+            count--;
+            i--;
+        }
+    }
+    createPieChart();
+    updateCountDisplay(count);
 }
 
 //callback function for textSearch
-function callbackTextSearch (results, status, pagination) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        results.forEach(getCountInRadius);
+function callbackTextSearch (results, pagination, type) {
+    for(var i in results) {
+        results[i].type = type;
+        getCountInRadius(results[i]);
+    }
 
-        if(pagination.hasNextPage) {
-            $('.bg_overlay_alt').addClass('is_show');
-            $('body').addClass('no_scroll');
-            pagination.nextPage();
-        } else {
-            $('.bg_overlay_alt').removeClass('is_show');
-            $('body').removeClass('no_scroll');
-            
-            updateCountDisplay(count);
-            createPieChart();
-        }
+    if(pagination.hasNextPage) {
+        $('.bg_overlay_alt').addClass('is_show');
+        $('body').addClass('no_scroll');
+        pagination.nextPage();
+    } else {
+        $('.bg_overlay_alt').removeClass('is_show');
+        $('body').removeClass('no_scroll');
+        
+        updateCountDisplay(count);
+        createPieChart();
     }
 }
 
@@ -343,9 +366,9 @@ function calculateRoute(start, end) {
         travelMode: $('input[name=travel_mode]:checked').val(),
     }, function(response, status) {
         if (status === 'OK') {
-        directionsDisplay.setDirections(response);
+            directionsDisplay.setDirections(response);
         } else {
-        alert('Directions request failed due to ' + status);
+            alert('Directions request failed due to ' + status);
         }
     });
 }
@@ -424,22 +447,23 @@ function onlyUnique(value, index, self) {
 // populates options for restaurant types
 function populateTypeOption () {
     var options = '';
-    var type = ['Mexican', 'French', 'Chinese', 'Italian'];
-
-    // if(sampleData.length > 1) {
-    //     for(var i = 0; i < sampleData.length; i++) {
-    //         if(sampleData[i].type)
-    //             type.push(sampleData[i].type);
-    //     }
-    // }
-
+    var type = ['Ethnic', 'Fast Casual', 'Family Style', 'Fast Food', 'Casual Dining', 'Fine Dining'];
+    var special = ['Barbeque', 'Lechon', 'Steak', 'Dessert', 'Pizza', 'Vegetarian'];
     type.sort();
+    special.sort();
 
     $.each( type.filter( onlyUnique ), function( key, value ) {
         options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '"/><label for="'+ value + '">'+ value + '</label>';
     });
 
     $subType.html(options);
+
+    options = '';
+    $.each( special.filter( onlyUnique ), function( key, value ) {
+        options += '<br><input type="checkbox" name="subtype" id="'+ value + '" value="'+ value + '"/><label for="'+ value + '">'+ value + '</label>';
+    });
+
+    $subSpecial.html(options);
 }
 
 // unbounces other marker and toggle bounce clicked marker
@@ -462,19 +486,21 @@ function processSampleData() {
     var array = [];
     var type = [];
     for(var i in sampleData) {
-        if(sampleData[i].opening_hours) {
+        if(sampleData[i].type) {
             array.push({
-                label : sampleData[i].opening_hours.open_now ? "Open" : "Close",
                 y: 1 ,
-                legendText: sampleData[i].opening_hours.open_now ? "Open" : "Close",
+                label: sampleData[i].type,
+                legendText: sampleData[i].type
+                //label : sampleData[i].opening_hours.open_now ? "Open" : "Close",
+                //legendText: sampleData[i].opening_hours.open_now ? "Open" : "Close",
             });
-        } else {
-            array.push({
-                label : "No Schedule",
-                y: 1 ,
-                legendText: "No Schedule",
-            });
-        }
+        } //else {
+        //     array.push({
+        //         label : "No Schedule",
+        //         y: 1 ,
+        //         legendText: "No Schedule",
+        //     });
+        // }
     }
     var result = [];
     array.forEach(function(value) {
@@ -496,7 +522,7 @@ function processSampleData() {
 function createPieChart() {
     $("#chartContainer").CanvasJSChart({ 
 		title: { 
-			text: "Restaurants Open Right Now (within the circle)",
+			text: "Restaurants (within the circle)",
 			fontSize: 24
 		}, 
 		legend :{ 

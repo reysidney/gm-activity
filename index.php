@@ -4,7 +4,7 @@
 		<title>Restaurants</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="assets/css/style.css?v=2.0" />
+		<link type="text/css" rel="stylesheet" href="assets/css/style.css?v=2.01" />
 	</head>
 	<body>
 		<input type="hidden" id="baseurl" value="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>"/>
@@ -47,14 +47,19 @@
 				</div>
 				<hr>
 				<div class="searchby">
-					<label>Restaurant Types:
-					</label><br>
-					<input type="checkbox" name="subtype" id="all" value="" checked/>
-					<label for="all">All</label>
-					<span id="subtype_select"></span>
+					<div class="width-50">
+						<label>Types:
+						</label>
+						<span id="subtype_select"></span>
+					</div>
+					<div class="width-50">
+						<label>Specialties:
+						</label>
+						<span id="subspecial_select"></span>
+					</div>
 				</div>
 				<hr>
-				<div class="searchby">
+				<div class="radius_count">
 					<label for="count">There <span id="count"></span> within <input type="number" id="radius" value="1000" step="10"/> meters</label>
 				</div>
 			</div>
@@ -72,7 +77,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="assets/js/main.js?v=2.0"></script>
-	<script src="assets/js/footer.js?v=2.0"></script>
+	<script src="assets/js/main.js?v=2.01"></script>
+	<script src="assets/js/footer.js?v=2.01"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c" async defer></script>
 </html>
