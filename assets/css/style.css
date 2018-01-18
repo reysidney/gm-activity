@@ -332,3 +332,9 @@ label:hover:before {
     width: 50%;
     display: table-cell;
 }
+
+@media only screen and (max-width: 1100px) {
+    #right-panel {
+        display: none;
+    }
+}

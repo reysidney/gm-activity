@@ -65,7 +65,7 @@ function initialize(position) {
         // set map for directions
         directionsDisplay.setMap(map);
         // set panel for directions
-        //directionsDisplay.setPanel(document.getElementById('right-panel'));
+        directionsDisplay.setPanel(document.getElementById('right-panel'));
         // draw self marker
         drawSelfMarker(myLatLng);
         // display all restaurants
