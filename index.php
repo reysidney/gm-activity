@@ -4,6 +4,7 @@
 		<title>Restaurants</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<meta charset="utf-8">
+		<link rel="icon" href="favicon.ico">
 		<link type="text/css" rel="stylesheet" href="assets/css/style.css?v=2.02" />
 	</head>
 	<body>
@@ -79,7 +80,7 @@
 	<script src="assets/js/main.js?v=2.03"></script>
 	<script src="assets/js/footer.js?v=2.01"></script>
 	<script src="assets/js/markercluster.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyCJxBoIexbK05cx5EjCchyWAnIrX-zactI" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyB54mz_LLvYXD-CrHfSiNS4OX1k6sxgN5E" async defer></script>
 	<!-- AIzaSyBAxVfzlvsIwDlwmGYxYCh4TL4VjcANG3c -->
 	<!-- AIzaSyCJxBoIexbK05cx5EjCchyWAnIrX-zactI -->
 </html>
