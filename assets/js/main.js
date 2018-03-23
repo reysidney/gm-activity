@@ -186,7 +186,7 @@ function callbackTextSearch (results, pagination, type) {
     $('.bg_overlay_alt').removeClass('is_show');
     $('body').removeClass('no_scroll');
 
-    var markerCluster = new MarkerClusterer(map, markers,
+    var markerCluster = new MarkerClusterer(map, markers_arr,
         {imagePath: 'assets/images/cluster_img'}
     );
     // if(pagination.hasNextPage) {
