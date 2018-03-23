@@ -179,17 +179,20 @@ function callbackTextSearch (results, pagination, type) {
         getCountInRadius(results[i]);
     }
 
-    if(pagination.hasNextPage) {
-        $('.bg_overlay_alt').addClass('is_show');
-        $('body').addClass('no_scroll');
-        pagination.nextPage();
-    } else {
-        $('.bg_overlay_alt').removeClass('is_show');
-        $('body').removeClass('no_scroll');
+    updateCountDisplay(count);
+    createPieChart();
+
+    // if(pagination.hasNextPage) {
+    //     $('.bg_overlay_alt').addClass('is_show');
+    //     $('body').addClass('no_scroll');
+    //     pagination.nextPage();
+    // } else {
+    //     $('.bg_overlay_alt').removeClass('is_show');
+    //     $('body').removeClass('no_scroll');
         
-        updateCountDisplay(count);
-        createPieChart();
-    }
+    //     updateCountDisplay(count);
+    //     createPieChart();
+    // }
 }
 
 // draw marker of current location
