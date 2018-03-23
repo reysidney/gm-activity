@@ -451,8 +451,8 @@ function removeMarkers() {
 		   markers_arr[i].setMap(null);
 		}
     }
-    markerCluster.clearMarkers();
-    
+    if(markerCluster)
+        markerCluster.clearMarkers();    
 }
 
 // returns all unique values
