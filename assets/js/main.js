@@ -1,4 +1,5 @@
 var map;
+var markerCluster;
 var infowindow;
 var myLatLng;
 var directionsDisplay;
@@ -186,9 +187,10 @@ function callbackTextSearch (results, pagination, type) {
     $('.bg_overlay_alt').removeClass('is_show');
     $('body').removeClass('no_scroll');
 
-    var markerCluster = new MarkerClusterer(map, markers_arr,
+    markerCluster = new MarkerClusterer(map, markers_arr,
         {imagePath: 'assets/images/cluster_img/m'}
     );
+
     // if(pagination.hasNextPage) {
     //     $('.bg_overlay_alt').addClass('is_show');
     //     $('body').addClass('no_scroll');
@@ -448,7 +450,9 @@ function removeMarkers() {
     	for(var i = 0; i < markers_arr.length; i++) {
 		   markers_arr[i].setMap(null);
 		}
-	}
+    }
+    markerCluster.setMap(null);
+    
 }
 
 // returns all unique values
