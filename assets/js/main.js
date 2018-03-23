@@ -451,7 +451,7 @@ function removeMarkers() {
 		   markers_arr[i].setMap(null);
 		}
     }
-    markerCluster.setMap(null);
+    markerCluster.clearMarkers();
     
 }
 
