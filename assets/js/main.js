@@ -147,7 +147,8 @@ function getRestaurantsByType (type) {
         radius: $radius.val(),
         query: type + " restaurant"
     };
-
+    $('.bg_overlay_alt').addClass('is_show');
+    $('body').addClass('no_scroll');
     placeService.textSearch(request, function (results, status, pagination) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             callbackTextSearch(results, pagination, type);
@@ -181,7 +182,9 @@ function callbackTextSearch (results, pagination, type) {
 
     updateCountDisplay(count);
     createPieChart();
-
+    
+    $('.bg_overlay_alt').removeClass('is_show');
+    $('body').removeClass('no_scroll');
     // if(pagination.hasNextPage) {
     //     $('.bg_overlay_alt').addClass('is_show');
     //     $('body').addClass('no_scroll');
