@@ -459,8 +459,8 @@ function onlyUnique(value, index, self) {
 // populates options for restaurant types
 function populateTypeOption () {
     var options = '';
-    var type = ['Ethnic', 'Fast Casual', 'Family Style', 'Fast Food', 'Casual Dining', 'Fine Dining'];
-    var special = ['Barbeque', 'Lechon', 'Steak', 'Dessert', 'Pizza', 'Vegetarian'];
+    var type = ['Fast Food', 'Casual Dining', 'Fine Dining'];//,'Ethnic', 'Fast Casual', 'Family Style'];
+    var special = ['Barbeque', 'Lechon', 'Steak'];//, 'Dessert', 'Pizza', 'Vegetarian'];
     type.sort();
     special.sort();
 
