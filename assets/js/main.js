@@ -185,6 +185,10 @@ function callbackTextSearch (results, pagination, type) {
     
     $('.bg_overlay_alt').removeClass('is_show');
     $('body').removeClass('no_scroll');
+
+    var markerCluster = new MarkerClusterer(map, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+    );
     // if(pagination.hasNextPage) {
     //     $('.bg_overlay_alt').addClass('is_show');
     //     $('body').addClass('no_scroll');
